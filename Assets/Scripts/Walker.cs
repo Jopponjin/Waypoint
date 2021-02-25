@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using WPEditor;
 
 public class Walker : MonoBehaviour
 {
-    [SerializeField]
     WaypointSystem waypointSystem;
 
     public bool shouldPatroll = true;
@@ -22,12 +22,8 @@ public class Walker : MonoBehaviour
     float patroleDelay = 0f;
     [Space]
 
-    [Header("Debug")]
     [SerializeField]
-    Transform currentTargetPos;
-
-    [SerializeField]
-    int indexer = 0;
+    int indexer = -1;
 
     [SerializeField]
     float tTime = 0;
@@ -38,7 +34,7 @@ public class Walker : MonoBehaviour
         waypointSystem = GameObject.FindGameObjectWithTag("WaypointManger").GetComponent<WaypointSystem>();
 
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(waypointSystem.wayPoints[0].transform.position);
+        //agent.SetDestination(waypointData.wayPoints[0].transform.position);
 
         indexer = 0;
         agent.speed = agentSpeed;
@@ -52,30 +48,28 @@ public class Walker : MonoBehaviour
         {
             if (!agentMoving & tTime >= patroleDelay & !patrollOnce)
             {
-                if (indexer <= waypointSystem.wayPoints.Length - 1)
-                {
-                    Debug.Log(currentTargetPos.ToString());
-                    Debug.Log("Agent is moveing to target");
-                    agent.SetDestination(waypointSystem.wayPoints[indexer].transform.position);
-                    agentMoving = true;
-                    currentTargetPos = waypointSystem.wayPoints[indexer].transform;
-                }
-                else
-                {
-                    indexer = 0;
-                    agentMoving = false;
-                    if (!shouldPatroll)
-                    {
-                        patrollOnce = true;
-                    }
-                }
+                Debug.Log("[AGENT]:agent indexer position = " + indexer);
+                Debug.Log("[AGENT]: Moveing to target");
+                agent.SetDestination(waypointSystem.points[indexer].position);
+                agentMoving = true;
             }
-            else if (agent.remainingDistance < 2f & agentMoving == true)
+            else if (agent.remainingDistance < 5f & agentMoving)
             {
-                Debug.Log("agent stoped");
-                indexer++;
+                Debug.Log("[AGENT]: Stoped");
                 tTime = 0;
+                indexer++;
                 agentMoving = false;
+            }
+            else if (!agentMoving & indexer >= waypointSystem.points.Length)
+            {
+                Debug.Log("I got to the last point");
+                indexer = 0;
+                agentMoving = false;
+
+                if (!shouldPatroll)
+                {
+                    patrollOnce = true;
+                }
             }
         }
     }
