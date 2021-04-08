@@ -454,22 +454,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points:
   - m_name: 
-    position: {x: -20.937721, y: 0, z: -0.14095497}
+    position: {x: 9.164109, y: 0, z: -9.715103}
     id: 0
   - m_name: 
-    position: {x: -9.61014, y: 0, z: -21.577097}
+    position: {x: 2.202282, y: 0, z: -20.708212}
     id: 0
   - m_name: 
-    position: {x: 19.379139, y: 0, z: -12.652437}
+    position: {x: -7.4694023, y: 0, z: -6.9290695}
     id: 0
   - m_name: 
-    position: {x: 4.7984085, y: 0, z: 11.885113}
+    position: {x: -10.605069, y: 0, z: 1.1720657}
     id: 0
   - m_name: 
-    position: {x: -3.5476875, y: 0, z: 32.658783}
+    position: {x: -0.0013914108, y: 0, z: 5.832844}
     id: 0
   - m_name: 
-    position: {x: -23.59473, y: 0, z: 28.142918}
+    position: {x: 7.623395, y: 0, z: 5.7379084}
+    id: 0
+  - m_name: 
+    position: {x: 8.627495, y: 0, z: -0.2948562}
     id: 0
 --- !u!4 &1164865075
 Transform:

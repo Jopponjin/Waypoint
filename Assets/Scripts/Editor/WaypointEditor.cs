@@ -55,10 +55,33 @@ namespace WPEditor
             if (GUILayout.Button(EditorGUIUtility.IconContent("d_Toolbar Plus"), GUILayout.ExpandWidth(true)))
             {
                 EditorGUI.BeginChangeCheck();
-                waypointSystem.AddWaypoint(new Point()).m_name = "Waypoint";
+                Vector3 m_tempPos;
+
+                if (waypointSystem.points.Length >= 2)
+                {
+                    Vector3 direction = (waypointSystem.points[waypointSystem.points.Length -1].position - waypointSystem[0].position).normalized;
+                    m_tempPos = waypointSystem.points[waypointSystem.points.Length - 1].position + direction;
+
+                    
+
+                    Debug.Log("position to put new point on " + m_tempPos);
+
+                     var m_newPoint = waypointSystem.AddWaypoint(new Point()).m_name = "Waypoint";
+
+                    if (waypointSystem.last != null)
+                    {
+                        if (waypointSystem.points[waypointSystem.length - 1].position == Vector3.zero)
+                        {
+                            waypointSystem.points[waypointSystem.length - 1].position = m_tempPos;
+                        }
+                    }
+                }
+                else
+                {
+                    waypointSystem.AddWaypoint(new Point()).m_name = "Waypoint";
+                }
                 EditorGUI.EndChangeCheck();
             }
-
 
             if (GUILayout.Button(EditorGUIUtility.IconContent("d_Toolbar Minus"), GUILayout.ExpandWidth(true)))
             {
@@ -66,10 +89,6 @@ namespace WPEditor
             }
 
             GUILayout.EndHorizontal();
-            
-            EditorGUILayout.Space();
-
-            
 
             for (int i = 0; i < waypointSystem.points.Length; i++)
             {
@@ -78,15 +97,16 @@ namespace WPEditor
                 EditorGUI.BeginChangeCheck();
                 serializedObj.ApplyModifiedProperties();
 
-                Vector3 m_waypointValue = Vector3.zero;
-
-                m_waypointValue = waypointSystem.points[i].position;
-
-                EditorGUILayout.Vector3Field(string.Empty, m_waypointValue, GUILayout.ExpandWidth(false));
+                if (waypointSystem.points[i] != null)
+                {
+                    EditorGUILayout.Vector3Field(string.Empty, waypointSystem.points[i].position, GUILayout.ExpandWidth(false));
+                }
 
                 serializedObj.ApplyModifiedProperties();
                 EditorGUILayout.EndHorizontal();
             }
+
+            EditorGUILayout.Space();
         }
 
         void DrawLines()

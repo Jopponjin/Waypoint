@@ -48,21 +48,21 @@ public class Walker : MonoBehaviour
         {
             if (!agentMoving & tTime >= patroleDelay & !patrollOnce)
             {
-                Debug.Log("[AGENT]:agent indexer position = " + indexer);
-                Debug.Log("[AGENT]: Moveing to target");
+                //Debug.Log("[AGENT]:agent indexer position = " + indexer);
+                //Debug.Log("[AGENT]: Moveing to target");
                 agent.SetDestination(waypointSystem.points[indexer].position);
                 agentMoving = true;
             }
             else if (agent.remainingDistance < 5f & agentMoving)
             {
-                Debug.Log("[AGENT]: Stoped");
+                //Debug.Log("[AGENT]: Stoped");
                 tTime = 0;
                 indexer++;
                 agentMoving = false;
             }
             else if (!agentMoving & indexer >= waypointSystem.points.Length)
             {
-                Debug.Log("I got to the last point");
+                //Debug.Log("I got to the last point");
                 indexer = 0;
                 agentMoving = false;
 
